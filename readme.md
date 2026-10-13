@@ -171,3 +171,43 @@ git push origin feature/demand-forecasting
 ```
 
 Changes should be reviewed and merged into the main branch through the team's agreed Git workflow.
+
+---
+
+## Operational Layer & Replenishment Engine (Punith)
+
+### Modules Added
+
+- **`src/synthetic_operational_data.py`**: Enriches the retail dataset with reproducible synthetic supplier and storage parameters (`supplier_id`, `lead_time_days`, `minimum_order_quantity`, `unit_cost`, `ordering_cost`, `annual_holding_cost_per_unit`, `storage_capacity_units`).
+- **`src/inventory_formulas.py`**: Pure-Python, unit-tested core inventory math library (Safety Stock, Expected Lead-Time Demand, Reorder Point, Economic Order Quantity, Inventory Position, Order Quantity Recommendation with MOQ and storage capacity constraints).
+- **`src/replenishment.py`**: End-to-end replenishment engine combining the latest inventory snapshots, demand forecasts, and operational parameters into explainable replenishment decisions with risk levels and cost projections.
+- **`scripts/run_replenishment_demo.py`**: End-to-end demonstration script that loads operational data, applies synthetic demo forecast fixtures (or user-supplied model forecast CSVs), and exports recommendations to `outputs/demo_replenishment_recommendations.csv`.
+
+### Documentation
+
+- `docs/operational_layer.md`: Detailed architecture of the operational layer, schema definitions, risk level explanations, and human-in-the-loop policies.
+- `docs/formula_explanation.md`: Mathematical formulations, worked numerical examples, and decision matrices for all inventory formulas.
+
+### Running the Tests
+
+To run the complete automated test suite (74 tests covering all edge cases and formulas):
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+### Running the Demonstration
+
+To run the end-to-end replenishment demo using synthetic forecast fixtures:
+
+```bash
+python scripts/run_replenishment_demo.py
+```
+
+To run the replenishment demo using a real forecast file from the forecasting team:
+
+```bash
+python scripts/run_replenishment_demo.py --forecast-csv path/to/real_forecasts.csv
+```
+
+The real forecast CSV must contain: `Product ID`, `Store ID`, `forecast_units`. For multi-date time-series forecasts, also provide `forecast_date` and specify `--forecast-mode timeseries`.

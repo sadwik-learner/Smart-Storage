@@ -1,0 +1,7 @@
+Model,Dataset Split,MAE,RMSE,MAPE (%),WAPE (%),Total Obs,Zero Targets Excluded,Valid MAPE Obs
+Naive (Lag-1),Validation,121.8347,156.2504,369.43,89.06,11000,69,10931
+7-Day Moving Average,Validation,94.526,117.4136,336.95,69.1,11000,69,10931
+Naive (Lag-1),Test (Final Holdout),119.3733,152.7152,360.99,87.49,10900,45,10855
+7-Day Moving Average,Test (Final Holdout),92.9996,115.1648,346.28,68.16,10900,45,10855
+"ARIMA (1, 0, 0)",Validation,89.993,110.1187,331.84,65.79,11000,69,10931
+"ARIMA (1, 0, 0)",Test (Final Holdout),88.5738,108.1937,339.37,64.92,10900,45,10855
